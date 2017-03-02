@@ -2,8 +2,8 @@
  MAE 322
  2/28/2017
  Robot Motion Script version 0.1 (not stable)
-
- Last modified: xx/xx/xxxx
+ Authors: Jan Bernhard,
+ Last modified: xx/xx/xxxx 
 
  Dependencies: Chris_Odems_MotionModule.ino
 
@@ -17,6 +17,9 @@
 
 // LEDs
 int onboardLEDPin = 13;
+
+// Remote Control Channels
+int ch1, ch2, ch3, ch4, ch5, ch6;
 
 // Sensors
 int proximitySensor; // holds proximity sensor value
@@ -45,6 +48,12 @@ void setup() {
 pinMode(onboardLEDPin, OUTPUT)
 pinMode(rightServo, OUTPUT)
 pinMode(leftServo, OUTPUT)
+pinMode(11,INPUT);
+pinMode(12,INPUT);
+pinMode(13,INPUT);
+pinMode(14,INPUT);
+pinMode(15,INPUT);
+pinMode(16,INPUT);
 // starting window sequence. 
 Serial.begin(9600);
 while(!Serial);
@@ -61,9 +70,20 @@ for(i = 0; i <= 3; i++){
 }
 
 void loop() {
+  // Capture PWM of remote control:
+  ch1 = pulseIn(11, HIGH, 21000); // Capture pulse width on Channel 1
+  ch2 = pulseIn(12, HIGH, 21000); // Capture pulse width on Channel 2
+  ch3 = pulseIn(14, HIGH, 21000); // Capture pulse width on Channel 3
+  ch4 = pulseIn(15, HIGH, 21000); // Capture pulse width on Channel 4
+  ch5 = pulseIn(16, HIGH, 21000); // Capture pulse width on Channel 5
+  ch6 = pulseIn(17, HIGH, 21000); // Capture pulse width on Channel 6
+
+  // Call functions
+  autonomous();
+  
   // put your main code here, to run repeatedly:
-Serial.println("Output to right servo unit: " + (String) rightServo)
-Serial.println("Output to left servo unit: " + (String) leftServo)
+//  Serial.println("Output to right servo unit: " + (String) rightServo)
+//  Serial.println("Output to left servo unit: " + (String) leftServo)
 
 }
 
@@ -124,6 +144,14 @@ void findLight() {
     if(proximitySensor > tooClose){
       break
     }
+  }
+}
+
+
+void autonomous() {
+  if(ch5 > 1600){
+    digitalWrite(onboardLEDPin, HIGH);
+    findLight();
   }
 }
 
