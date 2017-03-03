@@ -25,8 +25,9 @@ int ch1, ch2, ch3, ch4, ch5, ch6;
 
 // Sensors
 int proximitySensor; // holds proximity sensor value
-int photonSensor; // holds photo receptor value. 
-int tooClose;
+int photonSensorL; // holds left photon receptor value. 
+int photonSensorR; // holds left photon receptor value. 
+const int tooClose = 900; // proximity sensor value for minimum distance from object.
 
 // Servo
 Servo L_Servo;
@@ -82,8 +83,9 @@ for(int i = 0; i <= 3; i++){
 
 void loop() {
   // capture sensor input
-  photonSensor = pulseIn(5, HIGH, 21000);
-  proximitySensor = pulseIn(6, HIGH, 21000);
+  photonSensor1 = pulseIn(5, HIGH, 21000);
+  photonSensor2 = pulseIn(6, HIGH, 21000);
+//  proximitySensor = ;
   // Capture PWM of remote control:
   ch1 = pulseIn(7, HIGH, 21000); // Capture pulse width on Channel 1
   ch2 = pulseIn(8, HIGH, 21000); // Capture pulse width on Channel 2

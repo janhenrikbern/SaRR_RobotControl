@@ -16,9 +16,6 @@ void forwardDistance(){
    * how fast it will move. 
    */
   //********************** CONSTANTS ***************************************
-  int stepValue;
-  int stepValueSlow;
-  int stepValueFast;
   int nextObject = photonSensor;
   int closeDistance = 500;
   
@@ -27,34 +24,39 @@ void forwardDistance(){
   // start slow for increased friction then switch to fast and back to slow.
   if(nextObject <= tooClose){
     StopBot(500);
-    while(nextObject < tooClose){
-    nextObject = pulseIn(6, HIGH, 21000);
-    Lwheel = 1450;
-    Rwheel = 1550;
-    pulseMotors();
-    }
+    return;
   }
   if(nextObject < closeDistance) {
-    Lwheel = 1550;
-    Rwheel = 1550;
+    Lwheel = left_forward_slow;
+    Rwheel = right_forward_slow;
     pulseMotors();
   }
   else {
-    Lwheel = 1550;
-    Rwheel = 1550;
+    Lwheel = left_forward_slow;
+    Rwheel = right_forward_slow;
     pulseMotors();
     delay(1000);
-    Lwheel = 1650;
-    Rwheel = 1650;
+    Lwheel = left_forward_fast;
+    Rwheel = right_forward_fast;
     pulseMotors();
     delay(1000);
-    Lwheel = 1550;
-    Rwheel = 1550;
+    Lwheel = left_forward_slow;
+    Rwheel = right_forward_slow;
     pulseMotors();
     delay(1000);  
   }
+}
 
+void tLeft(){
+  Lwheel = left_forward_slow;
+  Rwheel = right_backward_slow;
+  pulseMotors();
+}
 
+void tRight(){
+  Lwheel = left_backward_slow;
+  Rwheel = right_forward_slow;
+  pulseMotors();
 }
 
 void findLight() {
@@ -64,9 +66,6 @@ void findLight() {
    */
  //********************** CONSTANTS ***************************************
   int brightLight; // assign value after determining it emperically
-  int rotationSpeed = 1; // sets step speed of rotation
-  int distanceSteps = 0.2; // meters
-  int tooClose; // proximity sensor value for certain distance from object.
 
  //********************** MAIN OPERATION **********************************
   while(photonSensor < brightLight){
