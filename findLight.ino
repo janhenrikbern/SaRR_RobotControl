@@ -17,7 +17,7 @@ void forwardDistance(){
    */
   //********************** CONSTANTS ***************************************
   int nextObject = photonSensor;
-  int closeDistance = 500;
+  int closeDistance = 500; //what is this?
   
   //********************** MAIN OPERATION **********************************
   // call motion module functions with step value
